@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Manrope:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-tertiary-container": "#f8f1ff",
+                    "secondary-container": "#006970",
+                    "inverse-primary": "#aa00aa",
+                    "surface-container-lowest": "#000000",
+                    "background": "#0e0e0e",
+                    "surface-bright": "#2c2c2c",
+                    "error-container": "#a70138",
+                    "on-surface": "#ffffff",
+                    "secondary-dim": "#00deec",
+                    "surface-container-low": "#131313",
+                    "on-secondary-fixed-variant": "#005e64",
+                    "tertiary-fixed-dim": "#b190ff",
+                    "surface-tint": "#ff7cf5",
+                    "on-background": "#ffffff",
+                    "on-primary": "#580058",
+                    "on-secondary": "#005359",
+                    "secondary-fixed-dim": "#00deec",
+                    "surface-dim": "#0e0e0e",
+                    "secondary-fixed": "#00eefc",
+                    "surface-container-high": "#1f1f1f",
+                    "tertiary-container": "#7000ff",
+                    "on-tertiary-fixed": "#1f0052",
+                    "tertiary-dim": "#874cff",
+                    "secondary": "#00eefc",
+                    "on-primary-fixed-variant": "#540054",
+                    "on-tertiary-fixed-variant": "#4700a7",
+                    "inverse-on-surface": "#555555",
+                    "error": "#ff6e84",
+                    "primary-fixed-dim": "#ff1cfe",
+                    "outline-variant": "#484848",
+                    "surface-container": "#191919",
+                    "primary-container": "#ff5af9",
+                    "primary": "#ff7cf5",
+                    "tertiary": "#ac89ff",
+                    "error-dim": "#d73357",
+                    "on-error": "#490013",
+                    "primary-fixed": "#ff5af9",
+                    "on-error-container": "#ffb2b9",
+                    "on-surface-variant": "#ababab",
+                    "surface-container-highest": "#262626",
+                    "outline": "#757575",
+                    "inverse-surface": "#f9f9f9",
+                    "on-tertiary": "#290067",
+                    "on-primary-container": "#440044",
+                    "on-secondary-fixed": "#003f43",
+                    "surface-variant": "#262626",
+                    "surface": "#0e0e0e",
+                    "primary-dim": "#ff51fa",
+                    "on-secondary-container": "#e3fdff",
+                    "tertiary-fixed": "#bda1ff",
+                    "on-primary-fixed": "#000000"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["Space Grotesk"],
+                    "body": ["Manrope"],
+                    "label": ["Manrope"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .glass-panel {
+            background: rgba(38, 38, 38, 0.4);
+            backdrop-filter: blur(20px) saturate(150%);
+            border: 1.5px solid rgba(72, 72, 72, 0.15);
+        }
+        .neon-glow-primary {
+            box-shadow: 0 0 20px rgba(255, 124, 245, 0.2);
+        }
+        .neon-glow-secondary {
+            box-shadow: 0 0 20px rgba(0, 238, 252, 0.2);
+        }
+        .asymmetric-grid {
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr 1fr;
+            gap: 2rem;
+        }
+        .waveform-bar {
+            width: 4px;
+            background: #00eefc;
+            border-radius: 2px;
+            transition: height 0.3s ease;
+        }
+        .hero-text-glow {
+            text-shadow: 0 0 30px rgba(255, 255, 255, 0.3), 0 0 60px rgba(255, 124, 245, 0.2);
+        }
+    </style>
+</head>
+<body class="bg-surface-container-lowest text-on-surface font-body selection:bg-primary selection:text-on-primary overflow-x-hidden">
+<!-- Top Navigation Anchor -->
+<header class="fixed top-0 w-full bg-black/40 backdrop-blur-xl border-b border-[#484848]/15 shadow-[0_0_20px_rgba(255,124,245,0.05)] z-50 flex justify-between items-center px-6 py-4">
+<div class="text-2xl font-bold tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-[#ff7cf5] to-[#00eefc] font-['Space_Grotesk'] tracking-tight">VibeX</div>
+<div class="hidden md:flex items-center gap-8">
+<nav class="flex items-center gap-6 font-['Space_Grotesk'] tracking-tight">
+<a class="text-[#ff7cf5] hover:text-[#00eefc] transition-colors duration-300" href="#">Discover</a>
+<a class="text-[#ababab] hover:text-[#00eefc] transition-colors duration-300" href="#">Trending</a>
+<a class="text-[#ababab] hover:text-[#00eefc] transition-colors duration-300" href="#">Collections</a>
+</nav>
+<div class="flex items-center gap-4">
+<button class="material-symbols-outlined text-[#ababab] hover:text-[#00eefc] transition-colors duration-300">search</button>
+<span class="material-symbols-outlined text-[#ff7cf5] text-3xl">account_circle</span>
+</div>
+</div>
+</header>
+<!-- Side Navigation Anchor -->
+<aside class="hidden lg:flex fixed left-0 top-0 h-full w-64 bg-[#0e0e0e]/60 backdrop-blur-2xl border-r border-[#484848]/15 shadow-[10px_0_30px_rgba(0,0,0,0.5)] flex-col pt-24 pb-8 z-40 font-['Manrope'] font-medium tracking-wide">
+<div class="px-6 mb-12">
+<h2 class="text-xl font-black text-[#ffffff] mb-1">Sonic Prism</h2>
+<p class="text-[10px] uppercase tracking-widest text-[#ababab]">Premium Tier</p>
+</div>
+<nav class="flex-1 space-y-2">
+<a class="flex items-center gap-4 px-6 py-3 text-[#ff7cf5] border-r-2 border-[#ff7cf5] bg-gradient-to-r from-[#ff7cf5]/10 to-transparent transition-all ease-in-out duration-300" href="#">
+<span class="material-symbols-outlined">explore</span>
+<span>Discover</span>
+</a>
+<a class="flex items-center gap-4 px-6 py-3 text-[#ababab] hover:bg-[#262626]/40 hover:text-[#ffffff] transition-all ease-in-out duration-300" href="#">
+<span class="material-symbols-outlined">library_music</span>
+<span>Library</span>
+</a>
+<a class="flex items-center gap-4 px-6 py-3 text-[#ababab] hover:bg-[#262626]/40 hover:text-[#ffffff] transition-all ease-in-out duration-300" href="#">
+<span class="material-symbols-outlined">sensors</span>
+<span>Stations</span>
+</a>
+<a class="flex items-center gap-4 px-6 py-3 text-[#ababab] hover:bg-[#262626]/40 hover:text-[#ffffff] transition-all ease-in-out duration-300" href="#">
+<span class="material-symbols-outlined">auto_awesome</span>
+<span>Radiance</span>
+</a>
+<a class="flex items-center gap-4 px-6 py-3 text-[#ababab] hover:bg-[#262626]/40 hover:text-[#ffffff] transition-all ease-in-out duration-300" href="#">
+<span class="material-symbols-outlined">person</span>
+<span>Profile</span>
+</a>
+</nav>
+<div class="px-6 mt-auto">
+<button class="w-full py-3 rounded-full bg-gradient-to-r from-[#ff7cf5] to-[#874cff] text-white font-bold text-sm tracking-tight shadow-[0_0_15px_rgba(255,124,245,0.3)] hover:scale-105 transition-transform">
+                Go Pro
+            </button>
+</div>
+</aside>
+<main class="lg:pl-64 pt-20 pb-32">
+<!-- Hero Section -->
+<section class="relative min-h-[90vh] flex flex-col items-center justify-center px-6 overflow-hidden">
+<!-- Massive Background Visual Element -->
+<div class="absolute inset-0 z-0 flex items-center justify-center pointer-events-none">
+<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] max-w-[1200px] opacity-40 blur-sm scale-110 lg:scale-125 transition-transform duration-[2000ms] animate-pulse">
+<img alt="Atmospheric Crystal Headphones" class="w-full h-full object-contain filter drop-shadow-[0_0_100px_rgba(255,124,245,0.3)]" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC6a6qiFbEoKAGIAww7agUwCPQIs3YRIXBA5uObMIrbwcFsG-ANP_RlJzj-MrSbXkyf60AG9MVlVzSChZgU-4HDmPypXDltxX6UgNBnKf3o5FDOiT-rDOsSrJW4bC7-sL-E96OelH-9Ds43g_1fxtLjHmp5TGs22eN5aROBAxX1SvtRJiBYMnoI5XK_1YNA2eDel9hT6evRP0Eftj9oEjz0wYWxyv-2fYDvYwG2x-zpI92UuGYLqoUqMH8oyNsi0oz0a2lhnqU8"/>
+</div>
+<!-- Gradients and Glows -->
+<div class="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/20 rounded-full blur-[150px]"></div>
+<div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-secondary/20 rounded-full blur-[150px]"></div>
+<div class="absolute inset-0 bg-gradient-to-b from-surface-container-lowest via-transparent to-surface-container-lowest opacity-80"></div>
+</div>
+<!-- Foreground Content -->
+<div class="relative z-10 text-center max-w-5xl px-4">
+<h1 class="font-headline text-7xl md:text-9xl font-black tracking-tighter mb-8 text-on-surface hero-text-glow leading-[0.9]">
+                    Enter The <br/><span class="text-transparent bg-clip-text bg-gradient-to-r from-primary via-white to-secondary">Sound</span>
+</h1>
+<p class="font-body text-on-surface/80 text-xl md:text-2xl max-w-2xl mx-auto mb-12 leading-relaxed font-medium drop-shadow-md">
+                    Experience music through the lens of pure light. A cinematic auditory journey designed for the next generation of sound purists.
+                </p>
+<div class="flex flex-col sm:flex-row gap-6 justify-center items-center">
+<button class="px-12 py-5 rounded-full bg-gradient-to-r from-primary to-tertiary-dim text-on-primary font-bold text-xl hover:scale-105 active:scale-95 transition-all shadow-[0_0_50px_rgba(255,124,245,0.4)]">
+                        Launch Player
+                    </button>
+<button class="px-12 py-5 rounded-full glass-panel border-white/20 text-white font-bold text-xl hover:bg-white/10 transition-all backdrop-blur-md">
+                        Explore Waves
+                    </button>
+</div>
+</div>
+<!-- Waveform Visualizer Decor -->
+<div class="absolute bottom-0 left-0 w-full flex items-end justify-center gap-1.5 h-40 px-12 opacity-40 pointer-events-none z-10">
+<div class="waveform-bar h-8"></div>
+<div class="waveform-bar h-20"></div>
+<div class="waveform-bar h-32"></div>
+<div class="waveform-bar h-16"></div>
+<div class="waveform-bar h-28"></div>
+<div class="waveform-bar h-48"></div>
+<div class="waveform-bar h-24"></div>
+<div class="waveform-bar h-40"></div>
+<div class="waveform-bar h-20"></div>
+<div class="waveform-bar h-36"></div>
+<div class="waveform-bar h-24"></div>
+<div class="waveform-bar h-56"></div>
+<div class="waveform-bar h-32"></div>
+<div class="waveform-bar h-20"></div>
+<div class="waveform-bar h-24"></div>
+</div>
+</section>
+<!-- Featured Section (Bento Grid) -->
+<section class="px-6 md:px-12 py-24">
+<div class="flex items-baseline justify-between mb-12">
+<h2 class="font-headline text-4xl font-bold tracking-tight">Sonic Portals</h2>
+<a class="text-secondary font-label text-sm uppercase tracking-widest hover:underline" href="#">View All</a>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<!-- Large Featured Card -->
+<div class="md:col-span-2 relative group overflow-hidden rounded-3xl glass-panel h-[450px]">
+<img alt="Abstract neon waves" class="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:scale-105 transition-transform duration-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB9S80UjW3Q41g5gDlCgeKpTGu6D8A-NEwgPSlByufOncDE7LmTuLmUdQ0toJIZKSAMPnmDAVvo3LvYSoL-rK9zrx14CB1W39CxeRGxnn2wjWmNI3o5dwaqCgW8oTkRj7JRBtlOkTC244ZREWsGxADb0KlqitSRZqRieTTrpJr3VOl0AJunpInzkG7GV-Lzx5I_E7XVXFSrRvktFuGC3r-AI_doRK6Pcdp1fNmgbYflTiRzgV_PtCTzEcS1O-FWOfLikM-_Kb7Z"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface-container-lowest via-transparent to-transparent"></div>
+<div class="absolute bottom-0 left-0 p-10">
+<span class="font-label text-xs font-bold text-primary tracking-[0.2em] uppercase mb-3 block">Daily Selection</span>
+<h3 class="font-headline text-4xl font-bold mb-4">Midnight Synthscapes</h3>
+<p class="text-on-surface-variant max-w-md mb-6">A curated journey through cinematic analog textures and deep rhythmic pulses.</p>
+<button class="flex items-center gap-3 glass-panel px-6 py-3 rounded-full hover:bg-surface-variant transition-colors">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+<span class="font-bold">Play Now</span>
+</button>
+</div>
+</div>
+<!-- Secondary Cards Stack -->
+<div class="flex flex-col gap-6">
+<div class="flex-1 glass-panel rounded-3xl p-8 relative overflow-hidden group hover:border-secondary/40 transition-colors">
+<div class="relative z-10">
+<span class="material-symbols-outlined text-secondary text-4xl mb-4">graphic_eq</span>
+<h3 class="font-headline text-2xl font-bold mb-2">Crystal Radiance</h3>
+<p class="text-on-surface-variant text-sm mb-4">High-fidelity ambient recordings in 360 spatial audio.</p>
+</div>
+<div class="absolute top-0 right-0 p-4 opacity-20 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-secondary text-6xl">blur_on</span>
+</div>
+</div>
+<div class="flex-1 glass-panel rounded-3xl p-8 relative overflow-hidden group hover:border-primary/40 transition-colors">
+<div class="relative z-10">
+<span class="material-symbols-outlined text-primary text-4xl mb-4">auto_awesome</span>
+<h3 class="font-headline text-2xl font-bold mb-2">Neural Mix</h3>
+<p class="text-on-surface-variant text-sm mb-4">AI-generated beats synchronized to your heart rate.</p>
+</div>
+<div class="absolute top-0 right-0 p-4 opacity-20 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-primary text-6xl">waves</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Floating Album Cards Section -->
+<section class="px-6 md:px-12 py-24 bg-surface-container-low/30">
+<h2 class="font-headline text-4xl font-bold tracking-tight mb-12 text-center">Trending Artifacts</h2>
+<div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-8">
+<!-- Album 1 -->
+<div class="group cursor-pointer">
+<div class="relative aspect-square rounded-2xl overflow-hidden mb-4 shadow-[0_10px_30px_rgba(0,0,0,0.4)] group-hover:shadow-[0_20px_50px_rgba(255,124,245,0.2)] group-hover:-rotate-2 group-hover:scale-105 transition-all duration-500">
+<img alt="DJ gear in neon light" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCatzCwv9aU9j_yA6taZs9A-9Piefcnegx6VUYTaZm-imj0BLjUQs-qfMPAsQxGcdm4VfAgXCErvVan6XU2MOuHs6AEJuaQnWN05XHwQHRP-dI96Y47j091LtBxcInhzspEcxUcLsBj8ypd4MpmiiGS99RcvFVeqFYTTozUxyIDyfNPQtal_38W16xIe_-WveobRdxiTTJQd_7ihNu4owhO5JeQl1r03goiyrlwrqY8hEvTArwAhqC6rRfrKEd87vkU6F1X9Fi8"/>
+<div class="absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+<div class="w-14 h-14 bg-white rounded-full flex items-center justify-center text-black shadow-xl">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+</div>
+</div>
+</div>
+<h4 class="font-bold text-on-surface group-hover:text-primary transition-colors truncate">Neon Horizon</h4>
+<p class="text-xs text-on-surface-variant font-label uppercase tracking-widest mt-1">Lumina Theory</p>
+</div>
+<!-- Album 2 -->
+<div class="group cursor-pointer">
+<div class="relative aspect-square rounded-2xl overflow-hidden mb-4 shadow-[0_10px_30px_rgba(0,0,0,0.4)] group-hover:shadow-[0_20px_50px_rgba(0,238,252,0.2)] group-hover:rotate-2 group-hover:scale-105 transition-all duration-500">
+<img alt="Electronic music concert" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDTDF4Bs1xnAJBWImKcIVOfLGcraSkkS19Xk3NKbonOvyi6HQO_FlezkhPupW8-cE0Hc93LdTtxkic2u9U6_v5OurHL_5a0J6EHdHdTUynWEIRfOK3pycOUrSy34VGeQXp9WngOqTKkmxc6BXqNU0YVOSqkgS0TqjMcSXr74pgz3EHzLAhehRc5ddLUuyl-bm__1OohaGT6U_OUeverSBZr0_3zgzgHpZHjVwkBu3ms8-Dxoq_1zbz-66rI-4mvkNx835hkyIFs"/>
+<div class="absolute inset-0 bg-secondary/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+<div class="w-14 h-14 bg-white rounded-full flex items-center justify-center text-black shadow-xl">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+</div>
+</div>
+</div>
+<h4 class="font-bold text-on-surface group-hover:text-secondary transition-colors truncate">Cyber Pulse</h4>
+<p class="text-xs text-on-surface-variant font-label uppercase tracking-widest mt-1">Vector Soul</p>
+</div>
+<!-- Album 3 -->
+<div class="group cursor-pointer">
+<div class="relative aspect-square rounded-2xl overflow-hidden mb-4 shadow-[0_10px_30px_rgba(0,0,0,0.4)] group-hover:shadow-[0_20px_50px_rgba(255,124,245,0.2)] group-hover:-rotate-1 group-hover:scale-105 transition-all duration-500">
+<img alt="Abstract light painting" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCrZi96_qEtTB1PfgGRp8siP_n5yCkD4c2bS8NyqX8e7d7OG2WJCk3YCXC_y66zLeSgkNZaHZAfTOhEUR-HeZOK07Xc6FTRq2KF9skLQo5Ncq5ciYMZ2M5D728cBfY0xSHxJHIOCo0rFx6qNgh3jf3apESgiDiZwwinXIhc-A_PHUXiVLGe1_7cEEiy9yNM2eTC5SQD9A0KwY3owJwQ5Sja_9l_iYHCTlfXb6Fc6mu3BfeGaNfrfNyC-MdST107_ZVjln8Tm5uo"/>
+<div class="absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+<div class="w-14 h-14 bg-white rounded-full flex items-center justify-center text-black shadow-xl">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+</div>
+</div>
+</div>
+<h4 class="font-bold text-on-surface group-hover:text-primary transition-colors truncate">Glitch Reality</h4>
+<p class="text-xs text-on-surface-variant font-label uppercase tracking-widest mt-1">Echo Core</p>
+</div>
+<!-- Album 4 -->
+<div class="group cursor-pointer">
+<div class="relative aspect-square rounded-2xl overflow-hidden mb-4 shadow-[0_10px_30px_rgba(0,0,0,0.4)] group-hover:shadow-[0_20px_50px_rgba(0,238,252,0.2)] group-hover:rotate-1 group-hover:scale-105 transition-all duration-500">
+<img alt="Professional studio microphone" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDGF8BloXlVPI5ICISzEgUJItJ601s-loZrUJSSXPoiImYRzMMiuhVh8_2JXZnu5eu_2MNeM9tQs9f2jj43OY5_QehSXYZgOvcrXLuCFJSB4PVRtz5tebPCpJEtwWYWoqsbMQCepXaCzAZoFqFcTTRC2IRclOJVYSIK0TABcqXmb3D6BivrY2q7UT0hlZ9KY9KtvuZ6nFlK_xsghNrP8i4Z1hbRRrg2neaAm56zppva7IVPyj9PgLRcFmjphC8224XqlXjUWNKT"/>
+<div class="absolute inset-0 bg-secondary/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+<div class="w-14 h-14 bg-white rounded-full flex items-center justify-center text-black shadow-xl">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+</div>
+</div>
+</div>
+<h4 class="font-bold text-on-surface group-hover:text-secondary transition-colors truncate">The Void Vocal</h4>
+<p class="text-xs text-on-surface-variant font-label uppercase tracking-widest mt-1">Astra Vox</p>
+</div>
+<!-- Album 5 -->
+<div class="group cursor-pointer">
+<div class="relative aspect-square rounded-2xl overflow-hidden mb-4 shadow-[0_10px_30px_rgba(0,0,0,0.4)] group-hover:shadow-[0_20px_50px_rgba(255,124,245,0.2)] group-hover:-rotate-3 group-hover:scale-105 transition-all duration-500">
+<img alt="Modern minimalist headphone" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA2yKEQh8v_TaRf7JO82xDb5izwf6w1Nufjuz74tRkmvMqgD_loTYqsE2eAUqIzGoZWN3kV--4sB-n57-0QcX7nk82Y7RfdQiCc4w-ZyRWidoGZxxEnLUm2WY6IElTJbT7TkM9mpvl6JhTvWug5disH9e544fK6FdqFe_hi4oPoTJGTuNaNby8LfWkXklpDNCZ2uQUpaeEDq8i6TyYBSGoHGkyqlzITbPKPXjv08I-H6kEAOXxxMUu7EIHYMn7gmsPkJS63mgXw"/>
+<div class="absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+<div class="w-14 h-14 bg-white rounded-full flex items-center justify-center text-black shadow-xl">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+</div>
+</div>
+</div>
+<h4 class="font-bold text-on-surface group-hover:text-primary transition-colors truncate">Prism Flow</h4>
+<p class="text-xs text-on-surface-variant font-label uppercase tracking-widest mt-1">Solaris</p>
+</div>
+</div>
+</section>
+</main>
+<!-- Premium Music Player UI Anchor -->
+<footer class="fixed bottom-6 left-1/2 -translate-x-1/2 w-[90%] max-w-5xl z-50">
+<div class="bg-[#191919]/60 backdrop-blur-2xl rounded-3xl md:rounded-full border border-[#ff7cf5]/30 shadow-[0_10px_40px_-10px_rgba(255,81,250,0.3)] px-6 py-4 md:py-3 flex flex-col md:flex-row items-center gap-6">
+<!-- Current Track Info -->
+<div class="flex items-center gap-4 w-full md:w-1/4">
+<div class="w-12 h-12 rounded-lg overflow-hidden flex-shrink-0 neon-glow-primary">
+<img alt="Now playing thumbnail" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBTtLzqnGoBUWbPI0tJ47CLpqhOq1_T77V8wVj6rx8gajy8PljC8g8eAZ-7s36KvOOWuZZ_6kNi1qXHK51a47X4sSRb63qvapiPP3PAKEvFQ-B852zFgfnM-Og9YEtu1ZNhJq46b3PRUAQDc_E8yUV0itbs_2xPcO6PIeCclkqw4tjEB27CDfTReRCkPwiYtsC3jRQ5f1mJzgGMCl7pnvLBi4cf0flx8AabcnuqNlTJRpYgpZrE8pT-eTZ4Ma0g4pskmXRQlkzm"/>
+</div>
+<div class="overflow-hidden">
+<h5 class="font-bold text-sm truncate">Crystal Neon Voyage</h5>
+<p class="text-[10px] text-primary uppercase tracking-widest font-label truncate">Synthetix One</p>
+</div>
+<button class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors">favorite</button>
+</div>
+<!-- Controls & Progress -->
+<div class="flex-1 w-full flex flex-col items-center gap-2">
+<div class="flex items-center gap-8">
+<button class="material-symbols-outlined text-[#ababab] hover:text-white transition-colors">shuffle</button>
+<button class="material-symbols-outlined text-white text-3xl">skip_previous</button>
+<button class="w-12 h-12 rounded-full bg-white text-black flex items-center justify-center hover:scale-110 active:scale-95 transition-all shadow-xl">
+<span class="material-symbols-outlined text-3xl" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+</button>
+<button class="material-symbols-outlined text-white text-3xl">skip_next</button>
+<button class="material-symbols-outlined text-[#ababab] hover:text-white transition-colors">repeat</button>
+</div>
+<div class="w-full flex items-center gap-3">
+<span class="text-[10px] font-label text-on-surface-variant">2:45</span>
+<div class="flex-1 h-1.5 bg-[#484848]/30 rounded-full relative overflow-hidden">
+<div class="absolute left-0 top-0 h-full w-[60%] bg-gradient-to-r from-primary to-secondary rounded-full">
+<div class="absolute right-0 top-1/2 -translate-y-1/2 w-3 h-3 bg-white rounded-full shadow-[0_0_10px_#fff]"></div>
+</div>
+</div>
+<span class="text-[10px] font-label text-on-surface-variant">4:12</span>
+</div>
+</div>
+<!-- Secondary Controls -->
+<div class="hidden md:flex items-center justify-end gap-6 w-1/4">
+<button class="material-symbols-outlined text-[#ababab] hover:text-secondary transition-colors">notes</button>
+<button class="material-symbols-outlined text-[#ababab] hover:text-secondary transition-colors">queue_music</button>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[#ababab]">volume_up</span>
+<div class="w-20 h-1 bg-[#484848]/30 rounded-full overflow-hidden">
+<div class="h-full w-[75%] bg-secondary"></div>
+</div>
+</div>
+<button class="material-symbols-outlined text-[#ababab] hover:text-secondary transition-colors">open_in_full</button>
+</div>
+</div>
+</footer>
+<!-- Bottom Mobile Nav Anchor (Only visible on mobile) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full bg-[#191919]/80 backdrop-blur-xl border-t border-[#484848]/30 py-3 flex justify-around items-center z-50">
+<a class="flex flex-col items-center justify-center text-[#00eefc]" href="#">
+<span class="material-symbols-outlined">play_circle</span>
+<span class="font-['Manrope'] text-[10px] uppercase tracking-[0.1em] mt-1">Now Playing</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#ababab]" href="#">
+<span class="material-symbols-outlined">queue_music</span>
+<span class="font-['Manrope'] text-[10px] uppercase tracking-[0.1em] mt-1">Queue</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#ababab]" href="#">
+<span class="material-symbols-outlined">graphic_eq</span>
+<span class="font-['Manrope'] text-[10px] uppercase tracking-[0.1em] mt-1">Mixes</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#ababab]" href="#">
+<span class="material-symbols-outlined">notes</span>
+<span class="font-['Manrope'] text-[10px] uppercase tracking-[0.1em] mt-1">Lyrics</span>
+</a>
+</nav>
+</body></html>
