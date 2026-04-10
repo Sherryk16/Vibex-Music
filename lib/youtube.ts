@@ -3,7 +3,7 @@
 import { YouTubeSearchResponse, YouTubeVideoResponse } from "./types";
 
 // Direct API key fallback if .env.local doesn't load
-const API_KEY = process.env.YOUTUBE_API_KEY || "AIzaSyCIHvNroTcVBjr5CrB3VA6UvH6NR2NiU4k";
+const API_KEY = process.env.YOUTUBE_API_KEY || "AIzaSyDqLyQ-m4HfhrwqNssE3CE_rk4CXbjaRvs";
 const BASE_URL = "https://www.googleapis.com/youtube/v3";
 
 /**
