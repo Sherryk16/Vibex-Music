@@ -4,7 +4,7 @@ import { useState, useCallback } from "react";
 import { usePlayer, Song } from "@/app/context/PlayerContext";
 import { SongCard } from "@/app/components/SongCard";
 import { SearchBar } from "@/app/components/SearchBar";
-import { searchMusic } from "@/lib/youtube";
+import { searchMusic, clearCache } from "@/lib/youtube";
 import { mapYouTubeVideo, YouTubeVideo } from "@/lib/types";
 
 // Convert YouTubeVideo to Song type
@@ -16,6 +16,10 @@ function toSong(video: YouTubeVideo): Song {
     thumbnail: video.thumbnail,
     thumbnailHigh: video.thumbnailHigh,
   };
+}
+
+function isQuotaError(error: string) {
+  return error?.includes('QUOTA_EXCEEDED') || error?.includes('quota');
 }
 
 export default function SearchPage() {
@@ -65,12 +69,31 @@ export default function SearchPage() {
       {error && (
         <div className="text-center py-12">
           <span className="material-symbols-outlined text-6xl text-red-400 mb-4">
-            error_outline
+            {isQuotaError(error) ? 'cloud_off' : 'error_outline'}
           </span>
           <p className="text-red-400 mb-4">{error}</p>
-          <p className="text-on-surface-variant text-sm">
-            Make sure your YouTube API key is correctly configured in .env.local
-          </p>
+          {isQuotaError(error) ? (
+            <div className="max-w-md mx-auto">
+              <p className="text-on-surface-variant text-sm mb-4">
+                YouTube API quota has been exceeded. Try these solutions:
+              </p>
+              <ul className="text-left text-sm text-on-surface-variant space-y-2 mb-6">
+                <li>• Wait for the quota to reset (usually midnight Pacific Time)</li>
+                <li>• Clear cache to use stored results</li>
+                <li>• Add a new API key to .env.local</li>
+              </ul>
+              <button
+                onClick={() => clearCache()}
+                className="px-6 py-2 rounded-full bg-primary/20 text-primary hover:bg-primary/30 transition-colors"
+              >
+                Clear Cache
+              </button>
+            </div>
+          ) : (
+            <p className="text-on-surface-variant text-sm">
+              Make sure your YouTube API key is correctly configured in .env.local
+            </p>
+          )}
         </div>
       )}
 

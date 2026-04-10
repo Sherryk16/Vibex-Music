@@ -4,10 +4,14 @@ import { useEffect, useState, useCallback, useRef } from "react";
 import Link from "next/link";
 import { usePlayer, Song } from "@/app/context/PlayerContext";
 import { SongCard } from "@/app/components/SongCard";
-import { getTrendingMusic } from "@/lib/youtube";
+import { getTrendingMusic, clearCache } from "@/lib/youtube";
 import { mapYouTubeVideoResult, YouTubeVideo } from "@/lib/types";
 import { getRecentlyPlayed } from "@/lib/storage";
 import { PlaylistSong } from "@/lib/types";
+
+function isQuotaError(error: string) {
+  return error?.includes('QUOTA_EXCEEDED') || error?.includes('quota');
+}
 
 // Convert YouTubeVideo to Song type
 function toSong(video: YouTubeVideo): Song {
@@ -109,7 +113,8 @@ export default function HomePage() {
     setLoading(true);
     setError(null);
     try {
-      const data = await getTrendingMusic(20);
+      // Fetch fewer trending songs (12 instead of 20)
+      const data = await getTrendingMusic(12);
       const videos = data.items.map(mapYouTubeVideoResult);
       setTrendingSongs(videos.map(toSong));
     } catch (err: any) {

@@ -120,14 +120,15 @@ export default function ForYouPage() {
 
   const fetchMoodMusic = useCallback(async () => {
     const results: Record<string, Song[]> = {};
-    
-    // Fetch 3 random moods to show
-    const shuffledMoods = [...moods].sort(() => Math.random() - 0.5).slice(0, 3);
-    
+
+    // Fetch only 2 random moods instead of 3 to save quota
+    const shuffledMoods = [...moods].sort(() => Math.random() - 0.5).slice(0, 2);
+
     for (const mood of shuffledMoods) {
       const randomQuery = mood.queries[Math.floor(Math.random() * mood.queries.length)];
       try {
-        const data = await searchMusic(randomQuery, 10);
+        // Fetch fewer results (6 instead of 10)
+        const data = await searchMusic(randomQuery, 6);
         const videos = data.items.map(mapYouTubeVideo);
         results[mood.id] = videos.map(toSong);
       } catch (err) {
@@ -135,19 +136,20 @@ export default function ForYouPage() {
         results[mood.id] = [];
       }
     }
-    
+
     setMoodResults(results);
   }, []);
 
   const fetchGenreMusic = useCallback(async () => {
     const results: Record<string, Song[]> = {};
-    
-    // Fetch 4 random genres
-    const shuffledGenres = [...genres].sort(() => Math.random() - 0.5).slice(0, 4);
-    
+
+    // Fetch only 2 random genres instead of 4 to save quota
+    const shuffledGenres = [...genres].sort(() => Math.random() - 0.5).slice(0, 2);
+
     for (const genre of shuffledGenres) {
       try {
-        const data = await searchMusic(genre.query, 10);
+        // Fetch fewer results (6 instead of 10)
+        const data = await searchMusic(genre.query, 6);
         const videos = data.items.map(mapYouTubeVideo);
         results[genre.name] = videos.map(toSong);
       } catch (err) {
@@ -155,7 +157,7 @@ export default function ForYouPage() {
         results[genre.name] = [];
       }
     }
-    
+
     setGenreResults(results);
   }, []);
 
@@ -163,14 +165,15 @@ export default function ForYouPage() {
     try {
       const hour = new Date().getHours();
       let query = "trending music";
-      
+
       if (hour >= 6 && hour < 10) query = "morning energy music";
       else if (hour >= 10 && hour < 14) query = "midday motivation music";
       else if (hour >= 14 && hour < 18) query = "afternoon chill music";
       else if (hour >= 18 && hour < 22) query = "evening vibes music";
       else query = "late night relaxing music";
-      
-      const data = await searchMusic(query, 10);
+
+      // Fetch fewer results (6 instead of 10)
+      const data = await searchMusic(query, 6);
       const videos = data.items.map(mapYouTubeVideo);
       setTimeBasedPicks(videos.map(toSong));
     } catch (err) {
@@ -180,8 +183,8 @@ export default function ForYouPage() {
 
   const fetchDailyMix = useCallback(async () => {
     try {
-      // Mix of trending and popular
-      const data = await getTrendingMusic(15);
+      // Mix of trending and popular - fetch fewer (8 instead of 15)
+      const data = await getTrendingMusic(8);
       const videos = data.items.map(mapYouTubeVideoResult);
       setDailyMix(videos.map(toSong));
     } catch (err) {
@@ -196,16 +199,16 @@ export default function ForYouPage() {
       const recommendations: Song[] = [];
       const usedVideoIds = new Set(recentlyPlayed.map(s => s.videoId));
 
-      // Strategy 1: Search for more songs by the same artists
-      const topArtists = [...new Set(recentlyPlayed.map(s => s.channelTitle))].slice(0, 3);
-      
+      // Strategy 1: Search for more songs by the same artists (limit to 2 artists, 4 results each)
+      const topArtists = [...new Set(recentlyPlayed.map(s => s.channelTitle))].slice(0, 2);
+
       for (const artist of topArtists) {
         try {
-          const data = await searchMusic(`${artist} best songs`, 8);
+          const data = await searchMusic(`${artist} best songs`, 4);
           const videos = data.items.map(mapYouTubeVideo).map(toSong);
-          
+
           for (const song of videos) {
-            if (!usedVideoIds.has(song.videoId) && recommendations.length < 15) {
+            if (!usedVideoIds.has(song.videoId) && recommendations.length < 10) {
               recommendations.push(song);
               usedVideoIds.add(song.videoId);
             }
@@ -215,78 +218,38 @@ export default function ForYouPage() {
         }
       }
 
-      // Strategy 2: Extract keywords from song titles
-      const keywords = recentlyPlayed
-        .flatMap(s => {
-          const words = s.title.toLowerCase().split(/\s+/);
-          return words.filter(w => 
-            w.length > 3 && 
-            !['feat', 'official', 'video', 'audio', 'lyrics', 'music', 'song'].includes(w)
-          );
-        });
-      
-      const topKeywords = [...new Set(keywords)].slice(0, 3);
-      
-      for (const keyword of topKeywords) {
-        try {
-          const data = await searchMusic(`${keyword} music`, 6);
-          const videos = data.items.map(mapYouTubeVideo).map(toSong);
-          
-          for (const song of videos) {
-            if (!usedVideoIds.has(song.videoId) && recommendations.length < 15) {
-              recommendations.push(song);
-              usedVideoIds.add(song.videoId);
+      // Only do Strategies 2 & 3 if we have enough quota and recommendations
+      if (recommendations.length < 5) {
+        // Strategy 2: Extract keywords from song titles (limit to 2 keywords)
+        const keywords = recentlyPlayed
+          .flatMap(s => {
+            const words = s.title.toLowerCase().split(/\s+/);
+            return words.filter(w =>
+              w.length > 3 &&
+              !['feat', 'official', 'video', 'audio', 'lyrics', 'music', 'song'].includes(w)
+            );
+          });
+
+        const topKeywords = [...new Set(keywords)].slice(0, 2);
+
+        for (const keyword of topKeywords) {
+          try {
+            const data = await searchMusic(`${keyword} music`, 4);
+            const videos = data.items.map(mapYouTubeVideo).map(toSong);
+
+            for (const song of videos) {
+              if (!usedVideoIds.has(song.videoId) && recommendations.length < 10) {
+                recommendations.push(song);
+                usedVideoIds.add(song.videoId);
+              }
             }
+          } catch (err) {
+            console.error(`Error fetching ${keyword}:`, err);
           }
-        } catch (err) {
-          console.error(`Error fetching ${keyword}:`, err);
         }
       }
 
-      // Strategy 3: Similar vibe/genre based on recent listening
-      if (recentlyPlayed.length >= 2) {
-        const titles = recentlyPlayed.map(s => s.title.toLowerCase()).join(' ');
-        
-        if (titles.includes('lofi') || titles.includes('chill') || titles.includes('relax')) {
-          const data = await searchMusic('chill beats to study', 5);
-          const videos = data.items.map(mapYouTubeVideo).map(toSong);
-          videos.forEach(song => {
-            if (!usedVideoIds.has(song.videoId) && recommendations.length < 15) {
-              recommendations.push(song);
-              usedVideoIds.add(song.videoId);
-            }
-          });
-        } else if (titles.includes('pop') || titles.includes('hit') || titles.includes('top')) {
-          const data = await searchMusic('trending pop hits', 5);
-          const videos = data.items.map(mapYouTubeVideo).map(toSong);
-          videos.forEach(song => {
-            if (!usedVideoIds.has(song.videoId) && recommendations.length < 15) {
-              recommendations.push(song);
-              usedVideoIds.add(song.videoId);
-            }
-          });
-        } else if (titles.includes('hip') || titles.includes('rap') || titles.includes('trap')) {
-          const data = await searchMusic('best hip hop tracks', 5);
-          const videos = data.items.map(mapYouTubeVideo).map(toSong);
-          videos.forEach(song => {
-            if (!usedVideoIds.has(song.videoId) && recommendations.length < 15) {
-              recommendations.push(song);
-              usedVideoIds.add(song.videoId);
-            }
-          });
-        } else if (titles.includes('rock') || titles.includes('metal') || titles.includes('guitar')) {
-          const data = await searchMusic('best rock anthems', 5);
-          const videos = data.items.map(mapYouTubeVideo).map(toSong);
-          videos.forEach(song => {
-            if (!usedVideoIds.has(song.videoId) && recommendations.length < 15) {
-              recommendations.push(song);
-              usedVideoIds.add(song.videoId);
-            }
-          });
-        }
-      }
-
-      setListeningBased(recommendations.slice(0, 15));
+      setListeningBased(recommendations.slice(0, 10));
     } catch (err) {
       console.error("Error generating listening-based recommendations:", err);
     }
